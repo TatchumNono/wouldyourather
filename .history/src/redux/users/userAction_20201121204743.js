@@ -1,0 +1,1 @@
+import {GET_} from 'module'
