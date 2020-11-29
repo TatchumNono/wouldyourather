@@ -15,7 +15,7 @@ const Login = () => {
     setAuthedUser(value);
   };
 
-  //console.log(authedUser);
+  console.log(authedUser);
 
   useEffect(() => {
     dispatch(fetchUsers());

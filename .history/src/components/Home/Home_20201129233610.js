@@ -143,7 +143,7 @@ const Home = () => {
           .filter(
             (key) =>
               !question[key].optionOne.votes.includes(authedUser) ||
-              !question[key].optionTwo.votes.includes(authedUser)
+              question[key].optionTwo.votes.includes(authedUser)
           )
           .map((key) => console.log(question[key].id))
   );

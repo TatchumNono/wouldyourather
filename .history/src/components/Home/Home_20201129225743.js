@@ -30,69 +30,15 @@ const Home = () => {
           //verifying if the object is empty or not
           question == null
             ? null
-            : Object.keys(question)
-                .filter(
-                  (key) =>
-                    !question[key].optionOne.votes.includes(authedUser) ||
-                    !question[key].optionTwo.votes.includes(authedUser)
-                )
-                .map((key) => (
-                  <div key={question[key].id}>
-                    <Card
-                      title={`${question[key].author} asks:`}
-                      style={{
-                        marginTop: 16,
-                      }}
-                      type='inner'>
-                      <Row>
-                        <Col span={7}>
-                          <Avatar
-                            size={64}
-                            src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fimgbin.com%2Fpng%2FLGzVdNb1%2Fcomputer-icons-avatar-user-login-png&psig=AOvVaw0YcgQcnZLUQJPKZCXQTVIR&ust=1606733833181000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJDg8IL2pe0CFQAAAAAdAAAAABAI'
-                          />
-                        </Col>
-                        <Col span={2}>
-                          <Divider type='vertical' />
-                        </Col>
-                        <Col span={15}>
-                          <b>Would You Rather...</b>
-                          <br />
-                          <br />
-                          {`... ${question[key].optionOne.text} ...`}
-                          <br />
-                          <br />
-                          <Button type='primary' block>
-                            View Poll
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </div>
-                ))
-        }
-      </div>
-    );
-  };
-
-  const Answered = () => {
-    return (
-      <>
-        {question == null
-          ? null
-          : Object.keys(question)
-              .filter(
-                (key) =>
-                  question[key].optionOne.votes.includes(authedUser) ||
-                  question[key].optionTwo.votes.includes(authedUser)
-              )
-              .map((key) => (
-                <div key={question[key].id}>
+            : Object.keys(question).map((key) => (
+                <>
                   <Card
                     title={`${question[key].author} asks:`}
                     style={{
                       marginTop: 16,
                     }}
-                    type='inner'>
+                    type='inner'
+                    key={question[key].id}>
                     <Row>
                       <Col span={7}>
                         <Avatar
@@ -116,15 +62,16 @@ const Home = () => {
                       </Col>
                     </Row>
                   </Card>
-                </div>
-              ))}
-      </>
+                </>
+              ))
+        }
+      </div>
     );
   };
 
   const contentList = {
     tab1: <Unanswered />,
-    tab2: <Answered />,
+    tab2: <p>Answered</p>,
   };
 
   const onTabChange = (key, type) => {
@@ -136,17 +83,7 @@ const Home = () => {
     dispatch(fetchQuestion());
   }, [dispatch]);
 
-  console.log(
-    question == null
-      ? null
-      : Object.keys(question)
-          .filter(
-            (key) =>
-              !question[key].optionOne.votes.includes(authedUser) ||
-              !question[key].optionTwo.votes.includes(authedUser)
-          )
-          .map((key) => console.log(question[key].id))
-  );
+  console.log(Object.keys(question).filter((key) => question[key].optionOne.votes.).map((key)=>console.log(question[key].id)));
 
   return (
     <div>

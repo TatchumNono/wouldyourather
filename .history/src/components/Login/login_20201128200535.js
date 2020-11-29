@@ -15,13 +15,13 @@ const Login = () => {
     setAuthedUser(value);
   };
 
-  //console.log(authedUser);
+  console.log(authedUser);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  /* console.log(
+  console.log(
     setTimeout(() => {
       users == null
         ? console.log("is null")
@@ -31,7 +31,7 @@ const Login = () => {
     }, 6000),
     "end"
   );
- */
+
   return (
     <div>
       <Row>

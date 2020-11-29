@@ -15,23 +15,21 @@ const Login = () => {
     setAuthedUser(value);
   };
 
-  //console.log(authedUser);
+  console.log(authedUser);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  /* console.log(
+  console.log(
     setTimeout(() => {
       users == null
         ? console.log("is null")
-        : Object.keys(users)
-            .filter((key) => users[key].id === "sarahedo")
-            .map((key, i) => console.log(users[key]));
+        : Object.keys(users).filter(()=>).map((key, i) => console.log(users[key]));
     }, 6000),
     "end"
   );
- */
+
   return (
     <div>
       <Row>

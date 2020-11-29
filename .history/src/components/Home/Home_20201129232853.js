@@ -33,7 +33,7 @@ const Home = () => {
             : Object.keys(question)
                 .filter(
                   (key) =>
-                    !question[key].optionOne.votes.includes(authedUser) ||
+                    question[key].optionOne.votes.includes(authedUser) ||
                     !question[key].optionTwo.votes.includes(authedUser)
                 )
                 .map((key) => (
@@ -142,8 +142,8 @@ const Home = () => {
       : Object.keys(question)
           .filter(
             (key) =>
-              !question[key].optionOne.votes.includes(authedUser) ||
-              !question[key].optionTwo.votes.includes(authedUser)
+              question[key].optionOne.votes.includes(authedUser) ||
+              question[key].optionTwo.votes.includes(authedUser)
           )
           .map((key) => console.log(question[key].id))
   );

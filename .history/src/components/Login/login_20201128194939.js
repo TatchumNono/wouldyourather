@@ -11,27 +11,24 @@ const Login = () => {
   const users = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
 
+  console.log(
+    setTimeout(() => {
+      Object.keys(users).map((key, i) => console.log(users[key].id));
+    }, 5000),
+    "end"
+  );
+
   const change = (value) => {
     setAuthedUser(value);
   };
 
-  //console.log(authedUser);
-
+  console.log(authedUser);
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  /* console.log(
-    setTimeout(() => {
-      users == null
-        ? console.log("is null")
-        : Object.keys(users)
-            .filter((key) => users[key].id === "sarahedo")
-            .map((key, i) => console.log(users[key]));
-    }, 6000),
-    "end"
-  );
- */
+  console.log(users);
+
   return (
     <div>
       <Row>

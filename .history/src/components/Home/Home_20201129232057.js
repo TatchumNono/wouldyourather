@@ -37,13 +37,14 @@ const Home = () => {
                     !question[key].optionTwo.votes.includes(authedUser)
                 )
                 .map((key) => (
-                  <div key={question[key].id}>
+                  <>
                     <Card
                       title={`${question[key].author} asks:`}
                       style={{
                         marginTop: 16,
                       }}
-                      type='inner'>
+                      type='inner'
+                      key={question[key].id}>
                       <Row>
                         <Col span={7}>
                           <Avatar
@@ -67,7 +68,7 @@ const Home = () => {
                         </Col>
                       </Row>
                     </Card>
-                  </div>
+                  </>
                 ))
         }
       </div>
@@ -86,13 +87,14 @@ const Home = () => {
                   question[key].optionTwo.votes.includes(authedUser)
               )
               .map((key) => (
-                <div key={question[key].id}>
+                <>
                   <Card
                     title={`${question[key].author} asks:`}
                     style={{
                       marginTop: 16,
                     }}
-                    type='inner'>
+                    type='inner'
+                    key={question[key].id}>
                     <Row>
                       <Col span={7}>
                         <Avatar
@@ -116,7 +118,7 @@ const Home = () => {
                       </Col>
                     </Row>
                   </Card>
-                </div>
+                </>
               ))}
       </>
     );
