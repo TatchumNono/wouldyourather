@@ -1,4 +1,0 @@
-
-const getUsers = ()=> dispatch =>{
-
-}

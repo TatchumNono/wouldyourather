@@ -1,1 +1,0 @@
-import {applyMiddleware} from 'redux'
