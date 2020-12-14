@@ -2,8 +2,7 @@ let users = {
   sarahedo: {
     id: "sarahedo",
     name: "Sarah Edo",
-    avatarURL:
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fimgbin.com%2Fpng%2FLGzVdNb1%2Fcomputer-icons-avatar-user-login-png&psig=AOvVaw0YcgQcnZLUQJPKZCXQTVIR&ust=1606733833181000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJDg8IL2pe0CFQAAAAAdAAAAABAI",
+    avatarURL: "../../icons/login.png",
     answers: {
       "8xf0y6ziyjabvozdd253nd": "optionOne",
       "6ni6ok3ym7mf1p33lnez": "optionTwo",
@@ -127,7 +126,7 @@ function generateUID() {
 
 export function _getUsers() {
   return new Promise((res, rej) => {
-    setTimeout(() => res({ ...users }), 5000);
+    setTimeout(() => res({ ...users }), 1000);
   });
 }
 

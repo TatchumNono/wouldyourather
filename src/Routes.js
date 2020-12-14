@@ -2,6 +2,8 @@ import React from "react";
 import Login from "./components/Login/Login";
 import MainForm from "./components/Form/MainForm";
 import MainHome from "./components/Home/MainHome";
+import MainQuestion from "./components/Question/MainQuestion";
+import MainPoll from "./components/Polls/MainPoll";
 import MainLeaderBoard from "./components/LeaderBoard/MainLeaderBoard";
 import NotFound from "./components/NotFound/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
@@ -22,12 +24,22 @@ const Routes = () => {
             component={MainLeaderBoard}
           />
           <ProtectedRoute
+            path='/poll/:id'
+            isAuthenticated={isLoggedIn}
+            component={MainPoll}
+          />
+          <ProtectedRoute
+            path='/question/:id'
+            isAuthenticated={isLoggedIn}
+            component={MainQuestion}
+          />
+          <ProtectedRoute
             path='/home'
             isAuthenticated={isLoggedIn}
             component={MainHome}
           />
           <ProtectedRoute
-            path='/form'
+            path='/add'
             isAuthenticated={isLoggedIn}
             component={MainForm}
           />

@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import SubLogin from "./SubLogin";
 //import HomeLogin from "../Menu/homeMenu";
 //import Home from "../Home/Home";
-import LoginMenu from "../Menu/loginMenu";
+//import LoginMenu from "../Menu/loginMenu";
 //import { useSelector } from "react-redux";
 
 const Login = () => {
@@ -16,9 +16,7 @@ const Login = () => {
         <Header
           style={{
             backgroundColor: "#fff",
-          }}>
-          <LoginMenu />
-        </Header>
+          }}></Header>
         <Content style={{ backgroundColor: "#fff" }}>
           <SubLogin />
         </Content>

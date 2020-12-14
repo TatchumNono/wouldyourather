@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchQuestion } from "../../redux/questions/questionAction";
 import { Divider, Card, Row, Col, Avatar, Button } from "antd";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
   const [key, setKey] = useState("tab1");
   const question = useSelector((state) => state.question.question);
+  const users = useSelector((state) => state.users.users);
   const authedUser = useSelector((state) => state.users.authedUser);
-  // const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const tabList = [
     {
@@ -20,6 +23,20 @@ const Home = () => {
       tab: "Answered Questions",
     },
   ];
+
+  const name = (id) => {
+    const name = Object.keys(users)
+      .filter((key) => users[key].id === id)
+      .map((key) => users[key].name);
+    return name;
+  };
+
+  const profile = (id) => {
+    const profile = Object.keys(users)
+      .filter((key) => users[key].id === id)
+      .map((key) => users[key].avatarURL);
+    return profile;
+  };
 
   const Unanswered = () => {
     return (
@@ -41,16 +58,17 @@ const Home = () => {
                 .map((key) => (
                   <div key={question[key].id}>
                     <Card
-                      title={`${question[key].author} asks:`}
+                      title={`${name(question[key].author)} asks:`}
                       style={{
                         marginTop: 16,
                       }}
-                      type='inner'>
+                      type='inner'
+                      key={question[key].id}>
                       <Row>
                         <Col span={7}>
                           <Avatar
                             size={64}
-                            src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fimgbin.com%2Fpng%2FLGzVdNb1%2Fcomputer-icons-avatar-user-login-png&psig=AOvVaw0YcgQcnZLUQJPKZCXQTVIR&ust=1606733833181000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJDg8IL2pe0CFQAAAAAdAAAAABAI'
+                            src={profile(question[key].author)}
                           />
                         </Col>
                         <Col span={2}>
@@ -64,7 +82,9 @@ const Home = () => {
                           <br />
                           <br />
                           <Button type='primary' block>
-                            View Poll
+                            <Link to={`/question/${question[key].id}`}>
+                              View Poll
+                            </Link>
                           </Button>
                         </Col>
                       </Row>
@@ -82,25 +102,24 @@ const Home = () => {
         {question == null
           ? null
           : Object.keys(question)
+
               .filter(
                 (key) =>
                   question[key].optionOne.votes.includes(authedUser) ||
                   question[key].optionTwo.votes.includes(authedUser)
               )
-              .map((key) => (
+              .map((key, u) => (
                 <div key={question[key].id}>
                   <Card
-                    title={`${question[key].author} asks:`}
+                    title={`${name(question[key].author)} asks:`}
                     style={{
                       marginTop: 16,
                     }}
-                    type='inner'>
+                    type='inner'
+                    key={question[key].id}>
                     <Row>
                       <Col span={7}>
-                        <Avatar
-                          size={64}
-                          src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fimgbin.com%2Fpng%2FLGzVdNb1%2Fcomputer-icons-avatar-user-login-png&psig=AOvVaw0YcgQcnZLUQJPKZCXQTVIR&ust=1606733833181000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJDg8IL2pe0CFQAAAAAdAAAAABAI'
-                        />
+                        <Avatar size={64} src={profile(question[key].author)} />
                       </Col>
                       <Col span={2}>
                         <Divider type='vertical' />
@@ -112,7 +131,12 @@ const Home = () => {
                         {`... ${question[key].optionOne.text} ...`}
                         <br />
                         <br />
-                        <Button type='primary' block>
+                        <Button
+                          type='primary'
+                          block
+                          onClick={() =>
+                            history.push(`/poll/${question[key].id}`)
+                          }>
                           View Poll
                         </Button>
                       </Col>
@@ -139,36 +163,16 @@ const Home = () => {
     //document.title = `${authedUser}`;
   }, [dispatch, authedUser]);
 
-  console.log(question);
-
   console.log(
     question == null
       ? null
-      : Object.keys(question).filter(
-          (key) =>
-            question[key].optionOne.votes.every((key) => key !== authedUser) &&
-            question[key].optionTwo.votes.every((key) => key !== authedUser)
+      : Object.keys(question).map((key) =>
+          new Date(question[key].timestamp * 1000).toLocaleDateString()
         )
   );
 
   return (
     <div>
-      {/*
-      {
-        //verifying if the object is empty or not
-        question == null
-          ? null
-          : Object.keys(question).map((key) => (
-              <div>
-                <p>author: {question[key].author}</p>
-                <p>Would You Rather...</p>
-                <p>Option 1: {question[key].optionOne.text}</p>
-                <p>Option 2: {question[key].optionTwo.text}</p>
-                <Divider />
-              </div>
-            ))
-      } */}
-
       <Row>
         <Col xs={2} sm={4} md={6} lg={8} xl={5}></Col>
         <Col xs={20} sm={16} md={12} lg={8} xl={14} style={{ padding: "80px" }}>

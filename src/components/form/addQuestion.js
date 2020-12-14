@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Card, Row, Col, Divider, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { saveQuestion } from "../../redux/questions/questionAction";
+import { useHistory } from "react-router-dom";
 
 const AddQuestion = () => {
+  const authedUser = useSelector((state) => state.users.authedUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [options, setOptions] = useState({
     author: "",
     optionOneText: "",
@@ -16,7 +21,9 @@ const AddQuestion = () => {
     setOptions((prev) => ({ ...prev, [name]: value }));
   };
 
-  const authedUser = useSelector((state) => state.users.authedUser);
+  const redirect = () => {
+    setTimeout(() => history.push("/home"), [2000]);
+  };
 
   useEffect(() => {
     setOptions({ author: authedUser });
@@ -30,7 +37,7 @@ const AddQuestion = () => {
       span: 16,
     },
   };
-  const dispatch = useDispatch();
+
   return (
     <div>
       <Row>
@@ -85,7 +92,7 @@ const AddQuestion = () => {
               <Button
                 type='primary'
                 block
-                onClick={() => dispatch(saveQuestion(options))}>
+                onClick={() => dispatch(saveQuestion(options), redirect())}>
                 Submit
               </Button>
             </Form>

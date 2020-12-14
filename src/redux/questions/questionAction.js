@@ -32,6 +32,14 @@ export const saveQuestion = (question) => {
   };
 };
 
+export const saveQuestionAnswers = (object) => {
+  return (dispatch) => {
+    console.log(object);
+    const call = API._saveQuestionAnswer(object);
+    call.then((res) => console.log(res));
+  };
+};
+
 export const fetchQuestion = () => {
   return (dispatch) => {
     dispatch(questionsFetch);
