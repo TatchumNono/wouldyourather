@@ -19,17 +19,17 @@ const Routes = () => {
         <Switch>
           <Route exact path='/' component={Login} />
           <ProtectedRoute
-            path='/lead'
+            path='/leaderBoard'
             isAuthenticated={isLoggedIn}
             component={MainLeaderBoard}
           />
           <ProtectedRoute
-            path='/poll/:id'
+            path='/questions/:question_id'
             isAuthenticated={isLoggedIn}
             component={MainPoll}
           />
           <ProtectedRoute
-            path='/question/:id'
+            path='/question/:question_id'
             isAuthenticated={isLoggedIn}
             component={MainQuestion}
           />

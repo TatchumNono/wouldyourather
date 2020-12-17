@@ -35,7 +35,7 @@ const HomeMenu = () => {
           New Question
         </Menu.Item>
         <Menu.Item key='leaderboard' icon={<BarChartOutlined />}>
-          <Link to='/lead' />
+          <Link to='/leaderboard' />
           LeaderBoard
         </Menu.Item>
         <Menu.Item>
@@ -43,7 +43,8 @@ const HomeMenu = () => {
             .filter((key) => users[key].id === user)
             .map((key) => (
               <div key={users[key].id}>
-                <Avatar src={users[key].avatarURL} /> {users[key].name}
+                <Avatar size={40} src={users[key].avatarURL} />{" "}
+                {users[key].name}
               </div>
             ))}
         </Menu.Item>

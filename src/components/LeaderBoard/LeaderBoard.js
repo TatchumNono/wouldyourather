@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Row, Col, Avatar, Divider } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUsers } from "../../redux/users/userAction";
 
 const LeaderBoard = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
   const users = useSelector((state) => state.users.users);
+
   return (
     <div>
       <Row>
@@ -22,7 +30,11 @@ const LeaderBoard = () => {
                     key={users[key].id}>
                     <Row>
                       <Col span={5}>
-                        <Avatar size={64} src={users[key].avatarURL} />
+                        <Avatar
+                          size={100}
+                          src={users[key].avatarURL}
+                          style={{ paddingTop: "60" }}
+                        />
                       </Col>
                       <Col span={2}>
                         <Divider type='vertical' />

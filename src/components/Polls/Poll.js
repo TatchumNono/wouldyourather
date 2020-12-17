@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Card, Row, Col, Avatar, Divider } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchQuestion } from "../../redux/questions/questionAction";
+//Dimport { useHistory } from "react-router-dom";
 
 const Poll = ({ id }) => {
   const [total, setTotal] = useState(null);
   const [first, setFirst] = useState(null);
   const [second, setSecond] = useState(null);
+  const dispatch = useDispatch();
+  //const history = useHistory();
 
-  const question = useSelector((state) => state.question.question);
+  useEffect(() => {
+    dispatch(fetchQuestion);
+  }, [dispatch]);
+
   const users = useSelector((state) => state.users.users);
+  const question = useSelector((state) => state.question.question);
 
   const firstVote = useCallback(
     (id) => {
@@ -63,9 +71,7 @@ const Poll = ({ id }) => {
     setFirst(firstVote(id));
     setSecond(secondVote(id));
     setTotal(calculate(id));
-  }, [id, calculate, firstVote, secondVote]);
-
-  console.log(calculate());
+  }, [id, calculate, firstVote, secondVote, dispatch]);
 
   return (
     <Row>
@@ -85,7 +91,10 @@ const Poll = ({ id }) => {
                   key={question[key].id}>
                   <Row>
                     <Col span={7}>
-                      <Avatar size={64} src={profile(question[key].id)} />
+                      <Avatar
+                        size={100}
+                        src={`${profile(question[key].author)}`}
+                      />
                     </Col>
                     <Col span={2}>
                       <Divider type='vertical' />

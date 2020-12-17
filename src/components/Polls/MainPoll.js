@@ -4,7 +4,7 @@ import Poll from "./Poll";
 import HomeMenu from "../Menu/HomeMenu";
 
 const MainPoll = (props) => {
-  const { id } = props.match.params;
+  const { question_id } = props.match.params;
   const { Header, Content } = Layout;
   return (
     <div>
@@ -16,7 +16,7 @@ const MainPoll = (props) => {
           <HomeMenu />
         </Header>
         <Content style={{ backgroundColor: "#fff" }}>
-          <Poll id={id} />
+          <Poll id={question_id} />
         </Content>
       </Layout>
     </div>

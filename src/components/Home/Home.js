@@ -38,6 +38,8 @@ const Home = () => {
     return profile;
   };
 
+  console.log(profile("sarahedo"));
+
   const Unanswered = () => {
     return (
       <div>
@@ -67,8 +69,8 @@ const Home = () => {
                       <Row>
                         <Col span={7}>
                           <Avatar
-                            size={64}
-                            src={profile(question[key].author)}
+                            size={100}
+                            src={`${profile(question[key].author)}`}
                           />
                         </Col>
                         <Col span={2}>
@@ -119,7 +121,10 @@ const Home = () => {
                     key={question[key].id}>
                     <Row>
                       <Col span={7}>
-                        <Avatar size={64} src={profile(question[key].author)} />
+                        <Avatar
+                          size={100}
+                          src={`${profile(question[key].author)}`}
+                        />
                       </Col>
                       <Col span={2}>
                         <Divider type='vertical' />
@@ -135,7 +140,7 @@ const Home = () => {
                           type='primary'
                           block
                           onClick={() =>
-                            history.push(`/poll/${question[key].id}`)
+                            history.push(`/questions/${question[key].id}`)
                           }>
                           View Poll
                         </Button>

@@ -5,7 +5,7 @@ import HomeMenu from "../Menu/HomeMenu";
 
 const MainQuestion = (props) => {
   const { Header, Content } = Layout;
-  const { id } = props.match.params;
+  const { question_id } = props.match.params;
   return (
     <div>
       <Layout>
@@ -16,7 +16,7 @@ const MainQuestion = (props) => {
           <HomeMenu />
         </Header>
         <Content style={{ backgroundColor: "#fff" }}>
-          <Question id={id} />
+          <Question id={question_id} />
         </Content>
       </Layout>
     </div>

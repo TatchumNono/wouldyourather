@@ -8,7 +8,7 @@ const Question = ({ id }) => {
   const [object, setObject] = useState({
     authedUser: "",
     qid: "",
-    answer: "optionOne",
+    answer: "",
   });
   const question = useSelector((state) => state.question.question);
   const authedUser = useSelector((state) => state.users.authedUser);
@@ -36,7 +36,7 @@ const Question = ({ id }) => {
   };
 
   useEffect(() => {
-    setObject({ authedUser: authedUser, qid: id });
+    setObject({ authedUser: authedUser, qid: id, answer: "optionOne" });
   }, [authedUser, id]);
 
   const radioStyle = {
@@ -62,7 +62,10 @@ const Question = ({ id }) => {
                 key={question[key].id}>
                 <Row>
                   <Col span={7}>
-                    <Avatar size={64} src={profile(question[key].id)} />
+                    <Avatar
+                      size={100}
+                      src={`${profile(question[key].author)}`}
+                    />
                   </Col>
                   <Col span={2}>
                     <Divider type='vertical' />
@@ -73,7 +76,7 @@ const Question = ({ id }) => {
                       <Radio style={radioStyle} value='optionOne'>
                         {question[key].optionOne.text}
                       </Radio>
-                      <Radio style={radioStyle} value='"optionTwo"'>
+                      <Radio style={radioStyle} value='optionTwo'>
                         {question[key].optionTwo.text}
                       </Radio>
                     </Radio.Group>
@@ -83,7 +86,7 @@ const Question = ({ id }) => {
                       onClick={() =>
                         dispatch(
                           saveQuestionAnswers(object),
-                          history.push(`/poll/${question[key].id}`)
+                          history.push(`/questions/${question[key].id}`)
                         )
                       }>
                       Submit

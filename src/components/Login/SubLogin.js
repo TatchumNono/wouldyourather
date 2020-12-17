@@ -22,17 +22,6 @@ const SubLogin = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  /* console.log(
-    setTimeout(() => {
-      users == null
-        ? console.log("is null")
-        : Object.keys(users)
-            .filter((key) => users[key].id === "sarahedo")
-            .map((key, i) => console.log(users[key]));
-    }, 6000),
-    "end"
-  );
- */
   return (
     <div>
       <Row>
