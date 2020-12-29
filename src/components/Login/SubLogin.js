@@ -22,6 +22,12 @@ const SubLogin = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
+  const login = () => {
+    authedUser === ""
+      ? alert("Choose a user first")
+      : dispatch(loginUser(authedUser), history.push("/home"));
+  };
+
   return (
     <div>
       <Row>
@@ -52,11 +58,7 @@ const SubLogin = () => {
             </Select>
             <br />
             <br />
-            <Button
-              type='primary'
-              onClick={() =>
-                dispatch(loginUser(authedUser), history.push("/home"))
-              }>
+            <Button type='primary' onClick={login}>
               Login
             </Button>
           </Card>

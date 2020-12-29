@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchQuestion } from "../../redux/questions/questionAction";
 import { Divider, Card, Row, Col, Avatar, Button } from "antd";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 const Home = () => {
   const [key, setKey] = useState("tab1");
+  const [position, setPosition] = useState([]);
   const question = useSelector((state) => state.question.question);
   const users = useSelector((state) => state.users.users);
   const authedUser = useSelector((state) => state.users.authedUser);
@@ -38,11 +38,20 @@ const Home = () => {
     return profile;
   };
 
-  console.log(profile("sarahedo"));
+  const sortedDates = useCallback(() => {
+    setPosition(
+      question == null
+        ? null
+        : Object.keys(question)
+            .map((key) => question[key].timestamp)
+            .sort((a, b) => b - a)
+            .map((el) => el)
+    );
+  }, [question]);
 
   const Unanswered = () => {
     return (
-      <div>
+      <>
         {
           //verifying if the object is empty or not
           question == null
@@ -83,10 +92,13 @@ const Home = () => {
                           {`... ${question[key].optionOne.text} ...`}
                           <br />
                           <br />
-                          <Button type='primary' block>
-                            <Link to={`/question/${question[key].id}`}>
-                              View Poll
-                            </Link>
+                          <Button
+                            type='primary'
+                            block
+                            onClick={() =>
+                              history.push(`/questions/${question[key].id}`)
+                            }>
+                            View Poll
                           </Button>
                         </Col>
                       </Row>
@@ -94,7 +106,7 @@ const Home = () => {
                   </div>
                 ))
         }
-      </div>
+      </>
     );
   };
 
@@ -110,7 +122,7 @@ const Home = () => {
                   question[key].optionOne.votes.includes(authedUser) ||
                   question[key].optionTwo.votes.includes(authedUser)
               )
-              .map((key, u) => (
+              .map((key) => (
                 <div key={question[key].id}>
                   <Card
                     title={`${name(question[key].author)} asks:`}
@@ -140,7 +152,7 @@ const Home = () => {
                           type='primary'
                           block
                           onClick={() =>
-                            history.push(`/questions/${question[key].id}`)
+                            history.push(`/poll/${question[key].id}`)
                           }>
                           View Poll
                         </Button>
@@ -165,15 +177,31 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchQuestion());
-    //document.title = `${authedUser}`;
-  }, [dispatch, authedUser]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    sortedDates();
+  }, [sortedDates]);
 
   console.log(
     question == null
       ? null
       : Object.keys(question).map((key) =>
-          new Date(question[key].timestamp * 1000).toLocaleDateString()
+          new Date(question[key].timestamp).toGMTString()
         )
+  );
+
+  console.log(
+    question == null
+      ? null
+      : Object.keys(question)
+          .map(
+            (key) =>
+              /* new Date(question[key].timestamp * 1000).toLocaleDateString() */
+              question[key].timestamp
+          )
+          .sort((a, b) => b - a)
+          .map((el) => new Date(el).toGMTString())
   );
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Menu } from "antd";
 import {
   HomeOutlined,
@@ -9,8 +9,6 @@ import {
 import Avatar from "antd/lib/avatar/avatar";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../redux/users/userAction";
-import { useDispatch } from "react-redux";
-//import Login from "../../icons/login.png";
 
 const HomeMenu = () => {
   const [current, setCurrent] = useState("home");
@@ -20,13 +18,12 @@ const HomeMenu = () => {
 
   const handleClick = (e) => {
     setCurrent(e.key);
-    setCurrent(e.key);
   };
 
   return (
     <div>
       <Menu mode='horizontal' onClick={handleClick} selectedKeys={[current]}>
-        <Menu.Item active key='home' icon={<HomeOutlined />}>
+        <Menu.Item key='home' icon={<HomeOutlined />}>
           <Link to='/home' />
           Home
         </Menu.Item>

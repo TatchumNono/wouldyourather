@@ -24,12 +24,12 @@ const Routes = () => {
             component={MainLeaderBoard}
           />
           <ProtectedRoute
-            path='/questions/:question_id'
+            path='/poll/:question_id'
             isAuthenticated={isLoggedIn}
             component={MainPoll}
           />
           <ProtectedRoute
-            path='/question/:question_id'
+            path='/questions/:question_id'
             isAuthenticated={isLoggedIn}
             component={MainQuestion}
           />

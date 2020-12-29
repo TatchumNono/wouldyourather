@@ -86,7 +86,7 @@ const Question = ({ id }) => {
                       onClick={() =>
                         dispatch(
                           saveQuestionAnswers(object),
-                          history.push(`/questions/${question[key].id}`)
+                          history.push(`/poll/${question[key].id}`)
                         )
                       }>
                       Submit
