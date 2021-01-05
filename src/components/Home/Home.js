@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchQuestion } from "../../redux/questions/questionAction";
 import { Divider, Card, Row, Col, Avatar, Button } from "antd";
 import { useHistory } from "react-router-dom";
+import "./style.css";
 
 const Home = () => {
   const [key, setKey] = useState("tab1");
-  const [position, setPosition] = useState([]);
   const question = useSelector((state) => state.question.question);
   const users = useSelector((state) => state.users.users);
   const authedUser = useSelector((state) => state.users.authedUser);
@@ -38,17 +38,6 @@ const Home = () => {
     return profile;
   };
 
-  const sortedDates = useCallback(() => {
-    setPosition(
-      question == null
-        ? null
-        : Object.keys(question)
-            .map((key) => question[key].timestamp)
-            .sort((a, b) => b - a)
-            .map((el) => el)
-    );
-  }, [question]);
-
   const Unanswered = () => {
     return (
       <>
@@ -66,21 +55,20 @@ const Home = () => {
                       (key) => key !== authedUser
                     )
                 )
-                .map((key) => (
-                  <div key={question[key].id}>
+                .map((key) => question[key])
+                .sort((a, b) => b.timestamp - a.timestamp)
+                .map((item) => (
+                  <div key={item.id}>
                     <Card
-                      title={`${name(question[key].author)} asks:`}
+                      title={`${name(item.author)} asks:`}
                       style={{
                         marginTop: 16,
                       }}
                       type='inner'
-                      key={question[key].id}>
+                      key={item.id}>
                       <Row>
                         <Col span={7}>
-                          <Avatar
-                            size={100}
-                            src={`${profile(question[key].author)}`}
-                          />
+                          <Avatar size={100} src={`${profile(item.author)}`} />
                         </Col>
                         <Col span={2}>
                           <Divider type='vertical' />
@@ -89,14 +77,14 @@ const Home = () => {
                           <b>Would You Rather...</b>
                           <br />
                           <br />
-                          {`... ${question[key].optionOne.text} ...`}
+                          {`... ${item.optionOne.text} ...`}
                           <br />
                           <br />
                           <Button
                             type='primary'
                             block
                             onClick={() =>
-                              history.push(`/questions/${question[key].id}`)
+                              history.push(`/questions/${item.id}`)
                             }>
                             View Poll
                           </Button>
@@ -122,20 +110,22 @@ const Home = () => {
                   question[key].optionOne.votes.includes(authedUser) ||
                   question[key].optionTwo.votes.includes(authedUser)
               )
-              .map((key) => (
-                <div key={question[key].id}>
+              .map((key) => question[key])
+              .sort((a, b) => b.timestamp - a.timestamp)
+              .map((question) => (
+                <div key={question.id}>
                   <Card
-                    title={`${name(question[key].author)} asks:`}
+                    title={`${name(question.author)} asks:`}
                     style={{
                       marginTop: 16,
                     }}
                     type='inner'
-                    key={question[key].id}>
+                    key={question.id}>
                     <Row>
                       <Col span={7}>
                         <Avatar
                           size={100}
-                          src={`${profile(question[key].author)}`}
+                          src={`${profile(question.author)}`}
                         />
                       </Col>
                       <Col span={2}>
@@ -145,15 +135,13 @@ const Home = () => {
                         <b>Would You Rather...</b>
                         <br />
                         <br />
-                        {`... ${question[key].optionOne.text} ...`}
+                        {`... ${question.optionOne.text} ...`}
                         <br />
                         <br />
                         <Button
                           type='primary'
                           block
-                          onClick={() =>
-                            history.push(`/poll/${question[key].id}`)
-                          }>
+                          onClick={() => history.push(`/poll/${question.id}`)}>
                           View Poll
                         </Button>
                       </Col>
@@ -179,11 +167,8 @@ const Home = () => {
     dispatch(fetchQuestion());
   }, [dispatch]);
 
-  useEffect(() => {
-    sortedDates();
-  }, [sortedDates]);
-
-  console.log(
+  /* console.log(
+    "unsorted dates",
     question == null
       ? null
       : Object.keys(question).map((key) =>
@@ -192,17 +177,24 @@ const Home = () => {
   );
 
   console.log(
+    "sorted dates",
     question == null
       ? null
       : Object.keys(question)
-          .map(
-            (key) =>
-              /* new Date(question[key].timestamp * 1000).toLocaleDateString() */
-              question[key].timestamp
-          )
+          .map((key) => question[key].timestamp)
           .sort((a, b) => b - a)
           .map((el) => new Date(el).toGMTString())
   );
+
+  console.log(
+    "sorted questions",
+    question == null
+      ? null
+      : Object.keys(question)
+          .map((key) => question[key])
+          .sort((a, b) => b.timestamp - a.timestamp)
+          .map((el) => el)
+  ); */
 
   return (
     <div>
