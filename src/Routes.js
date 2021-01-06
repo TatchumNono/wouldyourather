@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "./components/Login/Login";
-import MainForm from "./components/Form/MainForm";
+import MainForm from "./components/form/MainForm";
 import MainHome from "./components/Home/MainHome";
 import MainQuestion from "./components/Question/MainQuestion";
 import MainPoll from "./components/Polls/MainPoll";
