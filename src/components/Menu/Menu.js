@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 //import { logoutUser } from "../../redux/users/userAction";
 
 const Menus = () => {
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState("");
   //const users = useSelector((state) => state.users.users);
   //const user = useSelector((state) => state.users.authedUser);
   //const dispatch = useDispatch();
