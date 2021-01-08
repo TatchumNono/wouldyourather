@@ -5,8 +5,6 @@ import { Card, Row, Col, Select, Button } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { useHistory } from "react-router-dom";
 
-//import login from "../../icons/login.png";
-
 const SubLogin = () => {
   const [authedUser, setAuthedUser] = useState("");
   const { Option } = Select;

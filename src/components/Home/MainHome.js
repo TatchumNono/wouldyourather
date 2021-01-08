@@ -1,10 +1,13 @@
 import React from "react";
 import { Layout } from "antd";
+import { useSelector } from "react-redux";
 import HomeMenu from "../Menu/HomeMenu";
+import Menus from "../Menu/Menu";
 import Home from "./Home";
 
 const MainHome = () => {
   const { Header, Content } = Layout;
+  const isLoggedIn = useSelector((state) => state.users.isLoggedIn);
   return (
     <div>
       <Layout>
@@ -12,7 +15,7 @@ const MainHome = () => {
           style={{
             backgroundColor: "#fff",
           }}>
-          <HomeMenu />
+          {isLoggedIn ? <HomeMenu /> : <Menus />}
         </Header>
         <Content style={{ backgroundColor: "#fff" }}>
           <Home />

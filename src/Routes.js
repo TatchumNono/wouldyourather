@@ -18,11 +18,8 @@ const Routes = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path='/' component={Login} />
-          <ProtectedRoute
-            path='/leaderBoard'
-            isAuthenticated={isLoggedIn}
-            component={MainLeaderBoard}
-          />
+          <Route path='/home' component={MainHome} />
+          <Route path='/leaderBoard' component={MainLeaderBoard} />
           <ProtectedRoute
             path='/poll/:question_id'
             isAuthenticated={isLoggedIn}
@@ -32,11 +29,6 @@ const Routes = () => {
             path='/questions/:question_id'
             isAuthenticated={isLoggedIn}
             component={MainQuestion}
-          />
-          <ProtectedRoute
-            path='/home'
-            isAuthenticated={isLoggedIn}
-            component={MainHome}
           />
           <ProtectedRoute
             path='/add'
