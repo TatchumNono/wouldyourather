@@ -1,7 +1,12 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-function ProtectedRoute({ component: Component, isAuthenticated, ...rest }) {
+function ProtectedRoute({
+  component: Component,
+  isAuthenticated,
+  location,
+  ...rest
+}) {
   return (
     <Route
       {...rest}
@@ -9,7 +14,14 @@ function ProtectedRoute({ component: Component, isAuthenticated, ...rest }) {
         if (isAuthenticated) {
           return <Component {...props} />;
         } else {
-          return <Redirect to={{ pathname: "/" }} />;
+          return (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: { from: location },
+              }}
+            />
+          );
         }
       }}
     />

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Radio, Button, Avatar, Divider } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { saveQuestionAnswers } from "../../redux/questions/questionAction";
+import {
+  saveQuestionAnswers,
+  fetchQuestion,
+} from "../../redux/questions/questionAction";
 import { useHistory } from "react-router-dom";
 
 const Question = ({ id }) => {
@@ -15,6 +18,10 @@ const Question = ({ id }) => {
   const users = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(fetchQuestion());
+  }, [dispatch]);
 
   const name = (id) => {
     const name = Object.keys(users)

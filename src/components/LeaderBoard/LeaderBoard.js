@@ -37,56 +37,58 @@ const LeaderBoard = () => {
     const { index, rank } = props;
     return (
       <div>
-        {Object.keys(users)
-          .filter(
-            (key) =>
-              Object.keys(users[key].answers).length +
-                users[key].questions.length ===
-              position[index]
-          )
-          .map((key) => (
-            <div key={users[key].id}>
-              <Ribbon text={rank} placement='start' key={users[key].id}>
-                <Card
-                  style={{
-                    textAlign: "center",
-                    boxShadow: "1px 1px 25px -17px rgba(0,0,0,0.79)",
-                  }}
-                  key={users[key].id}>
-                  <Row>
-                    <Col span={5}>
-                      <Avatar
-                        size={100}
-                        src={users[key].avatarURL}
-                        style={{ paddingTop: "60" }}
-                      />
-                    </Col>
-                    <Col span={2}>
-                      <Divider type='vertical' />
-                    </Col>
-                    <Col span={10}>
-                      <h2>{users[key].name}</h2>
-                      <br />
-                      Answered Question:
-                      {Object.keys(users[key].answers).length}
-                      <Divider type='horizontal' />
-                      Created Question:{users[key].questions.length}
-                    </Col>
-                    <Col span={2}>
-                      <Divider type='vertical' />
-                    </Col>
-                    <Col>
-                      <Card type='inner' title='SCORE'>
-                        {Object.keys(users[key].answers).length +
-                          users[key].questions.length}
-                      </Card>
-                    </Col>
-                  </Row>
-                </Card>
-              </Ribbon>
-              <br />
-            </div>
-          ))}
+        {users == null
+          ? null
+          : Object.keys(users)
+              .filter(
+                (key) =>
+                  Object.keys(users[key].answers).length +
+                    users[key].questions.length ===
+                  position[index]
+              )
+              .map((key) => (
+                <div key={users[key].id}>
+                  <Ribbon text={rank} placement='start' key={users[key].id}>
+                    <Card
+                      style={{
+                        textAlign: "center",
+                        boxShadow: "1px 1px 25px -17px rgba(0,0,0,0.79)",
+                      }}
+                      key={users[key].id}>
+                      <Row>
+                        <Col span={5}>
+                          <Avatar
+                            size={100}
+                            src={users[key].avatarURL}
+                            style={{ paddingTop: "60" }}
+                          />
+                        </Col>
+                        <Col span={2}>
+                          <Divider type='vertical' />
+                        </Col>
+                        <Col span={10}>
+                          <h2>{users[key].name}</h2>
+                          <br />
+                          Answered Question:
+                          {Object.keys(users[key].answers).length}
+                          <Divider type='horizontal' />
+                          Created Question:{users[key].questions.length}
+                        </Col>
+                        <Col span={2}>
+                          <Divider type='vertical' />
+                        </Col>
+                        <Col>
+                          <Card type='inner' title='SCORE'>
+                            {Object.keys(users[key].answers).length +
+                              users[key].questions.length}
+                          </Card>
+                        </Col>
+                      </Row>
+                    </Card>
+                  </Ribbon>
+                  <br />
+                </div>
+              ))}
       </div>
     );
   };

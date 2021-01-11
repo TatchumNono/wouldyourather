@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 
 const SubLogin = () => {
   const [authedUser, setAuthedUser] = useState("");
+  const [active, setActive] = useState(true);
   const { Option } = Select;
   const users = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const SubLogin = () => {
 
   const change = (value) => {
     setAuthedUser(value);
+    setActive(false);
   };
 
   useEffect(() => {
@@ -21,9 +23,8 @@ const SubLogin = () => {
   }, [dispatch]);
 
   const login = () => {
-    authedUser === ""
-      ? alert("Choose a user first")
-      : dispatch(loginUser(authedUser), history.push("/home"));
+    let { from } = history.location.state || { from: { pathname: "/home" } };
+    dispatch(loginUser(authedUser), history.replace(from));
   };
 
   return (
@@ -56,7 +57,7 @@ const SubLogin = () => {
             </Select>
             <br />
             <br />
-            <Button type='primary' onClick={login}>
+            <Button disabled={active} type='primary' onClick={login}>
               Login
             </Button>
           </Card>

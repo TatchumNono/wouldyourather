@@ -13,6 +13,10 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    dispatch(fetchQuestion());
+  }, [dispatch]);
+
   const tabList = [
     {
       key: "tab1",
@@ -23,20 +27,6 @@ const Home = () => {
       tab: "Answered Questions",
     },
   ];
-
-  const name = (id) => {
-    const name = Object.keys(users)
-      .filter((key) => users[key].id === id)
-      .map((key) => users[key].name);
-    return name;
-  };
-
-  const profile = (id) => {
-    const profile = Object.keys(users)
-      .filter((key) => users[key].id === id)
-      .map((key) => users[key].avatarURL);
-    return profile;
-  };
 
   const Unanswered = () => {
     return (
@@ -163,9 +153,19 @@ const Home = () => {
     setKey(key);
   };
 
-  useEffect(() => {
-    dispatch(fetchQuestion());
-  }, [dispatch]);
+  const name = (id) => {
+    const name = Object.keys(users)
+      .filter((key) => users[key].id === id)
+      .map((key) => users[key].name);
+    return name;
+  };
+
+  const profile = (id) => {
+    const profile = Object.keys(users)
+      .filter((key) => users[key].id === id)
+      .map((key) => users[key].avatarURL);
+    return profile;
+  };
 
   /* console.log(
     "unsorted dates",
