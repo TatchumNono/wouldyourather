@@ -16,16 +16,18 @@ const LeaderBoard = () => {
 
   const POS = useCallback(
     () =>
-      setPosition(
-        Object.keys(users)
-          .map(
-            (key) =>
-              Object.keys(users[key].answers).length +
-              users[key].questions.length
-          )
-          .sort((a, b) => b - a)
-          .map((el) => el)
-      ),
+      users == null
+        ? setPosition([])
+        : setPosition(
+            Object.keys(users)
+              .map(
+                (key) =>
+                  Object.keys(users[key].answers).length +
+                  users[key].questions.length
+              )
+              .sort((a, b) => b - a)
+              .map((el) => el)
+          ),
     [users]
   );
 

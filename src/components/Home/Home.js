@@ -13,6 +13,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  let names;
+  let profiles;
+
   useEffect(() => {
     dispatch(fetchQuestion());
   }, [dispatch]);
@@ -154,17 +157,23 @@ const Home = () => {
   };
 
   const name = (id) => {
-    const name = Object.keys(users)
-      .filter((key) => users[key].id === id)
-      .map((key) => users[key].name);
-    return name;
+    // eslint-disable-next-line no-unused-expressions
+    users == null
+      ? null
+      : (names = Object.keys(users)
+          .filter((key) => users[key].id === id)
+          .map((key) => users[key].name));
+    return names;
   };
 
   const profile = (id) => {
-    const profile = Object.keys(users)
-      .filter((key) => users[key].id === id)
-      .map((key) => users[key].avatarURL);
-    return profile;
+    // eslint-disable-next-line no-unused-expressions
+    users == null
+      ? null
+      : (profiles = Object.keys(users)
+          .filter((key) => users[key].id === id)
+          .map((key) => users[key].avatarURL));
+    return profiles;
   };
 
   /* console.log(

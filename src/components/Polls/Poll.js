@@ -21,19 +21,23 @@ const Poll = ({ id }) => {
   const question = useSelector((state) => state.question.question);
 
   const firstVote = useCallback(() => {
-    setFirst(
-      Object.keys(question)
-        .filter((key) => question[key].id === id)
-        .map((key) => question[key].optionOne.votes.length)
-    );
+    question == null
+      ? setFirst(0)
+      : setFirst(
+          Object.keys(question)
+            .filter((key) => question[key].id === id)
+            .map((key) => question[key].optionOne.votes.length)
+        );
   }, [id, question]);
 
   const secondVote = useCallback(() => {
-    setSecond(
-      Object.keys(question)
-        .filter((key) => question[key].id === id)
-        .map((key) => question[key].optionTwo.votes.length)
-    );
+    question == null
+      ? setSecond(0)
+      : setSecond(
+          Object.keys(question)
+            .filter((key) => question[key].id === id)
+            .map((key) => question[key].optionTwo.votes.length)
+        );
   }, [id, question]);
 
   const calculate = useCallback(() => {

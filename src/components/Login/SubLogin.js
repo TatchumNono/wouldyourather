@@ -23,7 +23,9 @@ const SubLogin = () => {
   }, [dispatch]);
 
   const login = () => {
-    let { from } = history.location.state || { from: { pathname: "/home" } };
+    let { from } = history.location.state || {
+        from: { pathname: "/home" },
+      } || { from: { pathname: "/nmnm" } };
     dispatch(loginUser(authedUser), history.replace(from));
   };
 
