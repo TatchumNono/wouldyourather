@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Card, Row, Col, Avatar, Divider, Progress, Badge } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchQuestion } from "../../redux/questions/questionAction";
+import NotFound from "../NotFound/NotFound";
 
 const Poll = ({ id }) => {
   const { Ribbon } = Badge;
@@ -10,6 +11,7 @@ const Poll = ({ id }) => {
   const [second, setSecond] = useState(null);
   const [firstP, setFirstP] = useState(0);
   const [secondP, setSecondP] = useState(0);
+  const [info, setInfo] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,6 +21,14 @@ const Poll = ({ id }) => {
   const authedUser = useSelector((state) => state.users.authedUser);
   const users = useSelector((state) => state.users.users);
   const question = useSelector((state) => state.question.question);
+
+  useEffect(() => {
+    setInfo(
+      question == null
+        ? null
+        : Object.keys(question).filter((key) => question[key].id === id)
+    );
+  }, [question, id]);
 
   const firstVote = useCallback(() => {
     question == null
@@ -41,15 +51,17 @@ const Poll = ({ id }) => {
   }, [id, question]);
 
   const calculate = useCallback(() => {
-    setTotal(
-      Object.keys(question)
-        .filter((key) => question[key].id === id)
-        .map(
-          (key) =>
-            question[key].optionOne.votes.length +
-            question[key].optionTwo.votes.length
-        )
-    );
+    question == null
+      ? setSecond(0)
+      : setTotal(
+          Object.keys(question)
+            .filter((key) => question[key].id === id)
+            .map(
+              (key) =>
+                question[key].optionOne.votes.length +
+                question[key].optionTwo.votes.length
+            )
+        );
   }, [id, question]);
 
   const name = (id) => {
@@ -89,96 +101,93 @@ const Poll = ({ id }) => {
     <Row>
       <Col xs={2} sm={4} md={6} lg={8} xl={5}></Col>
       <Col xs={20} sm={16} md={12} lg={8} xl={14} style={{ padding: "80px" }}>
-        {question == null
-          ? null
-          : Object.keys(question)
-              .filter((key) => question[key].id === id)
-              .map((key) => (
-                <Card
-                  title={`Asked by ${name(question[key].author)}`}
-                  style={{
-                    textAlign: "center",
-                    boxShadow: "1px 1px 25px -17px rgba(0,0,0,0.79)",
-                  }}
-                  key={question[key].id}>
-                  <Row>
-                    <Col span={7}>
-                      <Avatar
-                        size={100}
-                        src={`${profile(question[key].author)}`}
-                      />
-                    </Col>
-                    <Col span={2}>
-                      <Divider type='vertical' />
-                    </Col>
-                    <Col>
-                      Results:
-                      {question[key].optionOne.votes.includes(authedUser) ? (
-                        <Ribbon text='Your vote' placement='start'>
-                          <Card
-                            type='inner'
-                            style={{
-                              marginTop: 16,
-                              paddingRight: 30,
-                              paddingLeft: 30,
-                            }}>
-                            {question[key].optionOne.text}
-                            <br />
-                            <Progress percent={firstP} size='small' />
-                            <br />
-                            {`${first} out of ${total}`}
-                          </Card>
-                        </Ribbon>
-                      ) : (
-                        <Card
-                          type='inner'
-                          style={{
-                            marginTop: 16,
-                            paddingRight: 30,
-                            paddingLeft: 30,
-                          }}>
-                          {question[key].optionOne.text}
-                          <br />
-                          <Progress percent={firstP} size='small' />
-                          <br />
-                          {`${first} out of ${total}`}
-                        </Card>
-                      )}
-                      {question[key].optionTwo.votes.includes(authedUser) ? (
-                        <Ribbon text='Your vote' placement='start'>
-                          <Card
-                            type='inner'
-                            style={{
-                              marginTop: 16,
-                              paddingRight: 30,
-                              paddingLeft: 30,
-                            }}>
-                            {question[key].optionTwo.text}
-                            <br />
-                            <Progress percent={secondP} size='small' />
-                            <br />
-                            {`${second} out of ${total}`}
-                          </Card>
-                        </Ribbon>
-                      ) : (
-                        <Card
-                          type='inner'
-                          style={{
-                            marginTop: 16,
-                            paddingRight: 30,
-                            paddingLeft: 30,
-                          }}>
-                          {question[key].optionTwo.text}
-                          <br />
-                          <Progress percent={secondP} size='small' />
-                          <br />
-                          {`${second} out of ${total}`}
-                        </Card>
-                      )}
-                    </Col>
-                  </Row>
-                </Card>
-              ))}
+        {info === null || info.length === 0 ? (
+          <NotFound />
+        ) : info == null ? null : (
+          info.map((key) => (
+            <Card
+              title={`Asked by ${name(question[key].author)}`}
+              style={{
+                textAlign: "center",
+                boxShadow: "1px 1px 25px -17px rgba(0,0,0,0.79)",
+              }}
+              key={question[key].id}>
+              <Row>
+                <Col span={7}>
+                  <Avatar size={100} src={`${profile(question[key].author)}`} />
+                </Col>
+                <Col span={2}>
+                  <Divider type='vertical' />
+                </Col>
+                <Col>
+                  Results:
+                  {question[key].optionOne.votes.includes(authedUser) ? (
+                    <Ribbon text='Your vote' placement='start'>
+                      <Card
+                        type='inner'
+                        style={{
+                          marginTop: 16,
+                          paddingRight: 30,
+                          paddingLeft: 30,
+                        }}>
+                        {question[key].optionOne.text}
+                        <br />
+                        <Progress percent={firstP} size='small' />
+                        <br />
+                        {`${first} out of ${total}`}
+                      </Card>
+                    </Ribbon>
+                  ) : (
+                    <Card
+                      type='inner'
+                      style={{
+                        marginTop: 16,
+                        paddingRight: 30,
+                        paddingLeft: 30,
+                      }}>
+                      {question[key].optionOne.text}
+                      <br />
+                      <Progress percent={firstP} size='small' />
+                      <br />
+                      {`${first} out of ${total}`}
+                    </Card>
+                  )}
+                  {question[key].optionTwo.votes.includes(authedUser) ? (
+                    <Ribbon text='Your vote' placement='start'>
+                      <Card
+                        type='inner'
+                        style={{
+                          marginTop: 16,
+                          paddingRight: 30,
+                          paddingLeft: 30,
+                        }}>
+                        {question[key].optionTwo.text}
+                        <br />
+                        <Progress percent={secondP} size='small' />
+                        <br />
+                        {`${second} out of ${total}`}
+                      </Card>
+                    </Ribbon>
+                  ) : (
+                    <Card
+                      type='inner'
+                      style={{
+                        marginTop: 16,
+                        paddingRight: 30,
+                        paddingLeft: 30,
+                      }}>
+                      {question[key].optionTwo.text}
+                      <br />
+                      <Progress percent={secondP} size='small' />
+                      <br />
+                      {`${second} out of ${total}`}
+                    </Card>
+                  )}
+                </Col>
+              </Row>
+            </Card>
+          ))
+        )}
       </Col>
       <Col xs={2} sm={4} md={6} lg={8} xl={5}></Col>
     </Row>
